@@ -62,29 +62,31 @@ public class TennisGame2 implements TennisGame
     private void P2IsGreaterP1AndP2IsLessWhatFour() {
         if (compareTwoBoolean(P2pointIsGreaterWhat(P1point), P2pointIsLessWhat(4)))
         {
-            if (P2pointIsEquals(2))
-                P2res="Thirty";
-            if (P2pointIsEquals(3))
-                P2res="Forty";
-            if (P1pointIsEquals(1))
-                P1res="Fifteen";
-            if (P1pointIsEquals(2))
-                P1res="Thirty";
+            compareP2WithEquals("Thirty",2);
+            compareP2WithEquals("Forty", 3);
+            compareP1WithEquals("Fifteen", 1);
+            compareP1WithEquals("Thirty", 2);
             score = P1res + "-" + P2res;
         }
+    }
+
+    private void compareP2WithEquals(String dato, int i) {
+        if (P2pointIsEquals(i))
+            P2res=dato;
+    }
+
+    private void compareP1WithEquals(String dato, int i){
+        if (P1pointIsEquals(i))
+            P1res=dato;
     }
 
     private void P1IsGreaterP2AndP1IsLessWhatFour() {
         if (compareTwoBoolean(P1pointIsGreaterWhat(P2point), P1pointIsLessWhat(4)))
         {
-            if (P1pointIsEquals(2))
-                P1res="Thirty";
-            if (P1pointIsEquals(3))
-                P1res="Forty";
-            if (P2pointIsEquals(1))
-                P2res="Fifteen";
-            if (P2pointIsEquals(2))
-                P2res="Thirty";
+            compareP1WithEquals("Thirty", 2);
+            compareP1WithEquals("Forty", 3);
+            compareP2WithEquals("Fifteen", 1);
+            compareP2WithEquals("Thirty", 2);
             score = P1res + "-" + P2res;
         }
     }
@@ -92,12 +94,9 @@ public class TennisGame2 implements TennisGame
     private void P2IsGreaterWhatZeroAndP1EqualsZero() {
         if (compareTwoBoolean(P2pointIsGreaterWhat(0), P1pointIsEquals(0)))
         {
-            if (P2pointIsEquals(1))
-                P2res = "Fifteen";
-            if (P2pointIsEquals(2))
-                P2res = "Thirty";
-            if (P2pointIsEquals(3))
-                P2res = "Forty";
+            compareP2WithEquals("Fifteen", 1);
+            compareP2WithEquals("Thirty", 2);
+            compareP2WithEquals("Forty", 3);
 
             P1res = "Love";
             score = P1res + "-" + P2res;
@@ -107,12 +106,9 @@ public class TennisGame2 implements TennisGame
     private void P1IsGreaterWhatZeroAndP1EqualsZero() {
         if (compareTwoBoolean(P1pointIsGreaterWhat(0), P2pointIsEquals(0)))
         {
-            if (P1pointIsEquals(1))
-                P1res = "Fifteen";
-            if (P1pointIsEquals(2))
-                P1res = "Thirty";
-            if (P1pointIsEquals(3))
-                P1res = "Forty";
+            compareP1WithEquals("Fifteen", 1);
+            compareP1WithEquals("Thirty", 2);
+            compareP1WithEquals("Forty", 3);
 
             P2res = "Love";
             score = P1res + "-" + P2res;
