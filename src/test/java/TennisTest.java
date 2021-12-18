@@ -77,6 +77,7 @@ public class TennisTest {
         assertEquals(this.expectedScore, game.getScore());
     }
 
+
     @Test
     public void checkAllScoresTennisGame1() {
         TennisGame1 game = new TennisGame1("player1", "player2");

@@ -6,6 +6,7 @@ public class TennisGame2 implements TennisGame
     
     public String P1res = "";
     public String P2res = "";
+    public String score = "";
     private String player1Name;
     private String player2Name;
 
@@ -15,91 +16,167 @@ public class TennisGame2 implements TennisGame
     }
 
     public String getScore(){
-        String score = "";
-        if (P1point == P2point && P1point < 4)
-        {
-            if (P1point==0)
-                score = "Love";
-            if (P1point==1)
-                score = "Fifteen";
-            if (P1point==2)
-                score = "Thirty";
-            score += "-All";
-        }
-        if (P1point==P2point && P1point>=3)
-            score = "Deuce";
-        
-        if (P1point > 0 && P2point==0)
-        {
-            if (P1point==1)
-                P1res = "Fifteen";
-            if (P1point==2)
-                P1res = "Thirty";
-            if (P1point==3)
-                P1res = "Forty";
-            
-            P2res = "Love";
-            score = P1res + "-" + P2res;
-        }
-        if (P2point > 0 && P1point==0)
-        {
-            if (P2point==1)
-                P2res = "Fifteen";
-            if (P2point==2)
-                P2res = "Thirty";
-            if (P2point==3)
-                P2res = "Forty";
-            
-            P1res = "Love";
-            score = P1res + "-" + P2res;
-        }
-        
-        if (P1point>P2point && P1point < 4)
-        {
-            if (P1point==2)
-                P1res="Thirty";
-            if (P1point==3)
-                P1res="Forty";
-            if (P2point==1)
-                P2res="Fifteen";
-            if (P2point==2)
-                P2res="Thirty";
-            score = P1res + "-" + P2res;
-        }
-        if (P2point>P1point && P2point < 4)
-        {
-            if (P2point==2)
-                P2res="Thirty";
-            if (P2point==3)
-                P2res="Forty";
-            if (P1point==1)
-                P1res="Fifteen";
-            if (P1point==2)
-                P1res="Thirty";
-            score = P1res + "-" + P2res;
-        }
-        
-        if (P1point > P2point && P2point >= 3)
-        {
-            score = "Advantage player1";
-        }
-        
-        if (P2point > P1point && P1point >= 3)
-        {
-            score = "Advantage player2";
-        }
-        
-        if (P1point>=4 && P2point>=0 && (P1point-P2point)>=2)
+        score = pointEqualsOrP1pointLessToFour(score);
+        P1IsEqualsToP2AndP1IsGreaterWhatP2();
+
+        P1IsGreaterWhatZeroAndP1EqualsZero();
+        P2IsGreaterWhatZeroAndP1EqualsZero();
+
+        P1IsGreaterP2AndP1IsLessWhatFour();
+        P2IsGreaterP1AndP2IsLessWhatFour();
+
+        P1IsGreaterWhatP2AndP2IsGreaterWhatTwo();
+
+        P2IsGreaterWhatP1AndP1IsGreaterWhatTwo();
+
+        if (compareThreeBoolean(P1pointIsGreaterWhat(3), P2pointIsGreaterWhat(-1), numberIsGreaterWhat(subtraction(P1point, P2point),1)))
         {
             score = "Win for player1";
         }
-        if (P2point>=4 && P1point>=0 && (P2point-P1point)>=2)
+        if (compareThreeBoolean(P2pointIsGreaterWhat(3), P1pointIsGreaterWhat(-1), numberIsGreaterWhat(subtraction(P2point, P1point), 1)))
         {
             score = "Win for player2";
         }
         return score;
     }
-    
+
+    private void P2IsGreaterWhatP1AndP1IsGreaterWhatTwo() {
+        if (compareTwoBoolean(P2pointIsGreaterWhat(P1point), P1pointIsGreaterWhat(2)))
+        {
+            score = "Advantage player2";
+        }
+    }
+
+    private void P1IsGreaterWhatP2AndP2IsGreaterWhatTwo() {
+        if (compareTwoBoolean(P1pointIsGreaterWhat(P2point), P2pointIsGreaterWhat(2)))
+        {
+            score = "Advantage player1";
+        }
+    }
+
+    private void P1IsEqualsToP2AndP1IsGreaterWhatP2() {
+        if (compareTwoBoolean(P1pointIsEquals(P2point), P1pointIsGreaterWhat(2)))
+            score = "Deuce";
+    }
+
+    private void P2IsGreaterP1AndP2IsLessWhatFour() {
+        if (compareTwoBoolean(P2pointIsGreaterWhat(P1point), P2pointIsLessWhat(4)))
+        {
+            if (P2pointIsEquals(2))
+                P2res="Thirty";
+            if (P2pointIsEquals(3))
+                P2res="Forty";
+            if (P1pointIsEquals(1))
+                P1res="Fifteen";
+            if (P1pointIsEquals(2))
+                P1res="Thirty";
+            score = P1res + "-" + P2res;
+        }
+    }
+
+    private void P1IsGreaterP2AndP1IsLessWhatFour() {
+        if (compareTwoBoolean(P1pointIsGreaterWhat(P2point), P1pointIsLessWhat(4)))
+        {
+            if (P1pointIsEquals(2))
+                P1res="Thirty";
+            if (P1pointIsEquals(3))
+                P1res="Forty";
+            if (P2pointIsEquals(1))
+                P2res="Fifteen";
+            if (P2pointIsEquals(2))
+                P2res="Thirty";
+            score = P1res + "-" + P2res;
+        }
+    }
+
+    private void P2IsGreaterWhatZeroAndP1EqualsZero() {
+        if (compareTwoBoolean(P2pointIsGreaterWhat(0), P1pointIsEquals(0)))
+        {
+            if (P2pointIsEquals(1))
+                P2res = "Fifteen";
+            if (P2pointIsEquals(2))
+                P2res = "Thirty";
+            if (P2pointIsEquals(3))
+                P2res = "Forty";
+
+            P1res = "Love";
+            score = P1res + "-" + P2res;
+        }
+    }
+
+    private void P1IsGreaterWhatZeroAndP1EqualsZero() {
+        if (compareTwoBoolean(P1pointIsGreaterWhat(0), P2pointIsEquals(0)))
+        {
+            if (P1pointIsEquals(1))
+                P1res = "Fifteen";
+            if (P1pointIsEquals(2))
+                P1res = "Thirty";
+            if (P1pointIsEquals(3))
+                P1res = "Forty";
+
+            P2res = "Love";
+            score = P1res + "-" + P2res;
+        }
+    }
+
+    private String pointEqualsOrP1pointLessToFour(String score) {
+        if (compareTwoBoolean(P1pointIsEquals(P2point), P1pointIsLessWhat(4)))
+        {
+            if (P1pointIsEquals(0))
+                score = "Love";
+            if (P1pointIsEquals(1))
+                score = "Fifteen";
+            if (P1pointIsEquals(2))
+                score = "Thirty";
+            score += "-All";
+        }
+        return score;
+    }
+
+    private boolean compareTwoBoolean(boolean one, boolean two){
+        return one && two;
+    }
+
+    private boolean compareThreeBoolean(boolean one, boolean two, boolean three){
+        return one && two && three;
+    }
+
+    private boolean P1pointIsEquals(int i) {
+        return P1point==i;
+    }
+
+    private boolean P2pointIsEquals(int i){
+        return P2point==i;
+    }
+
+    private boolean P1pointIsGreaterWhat(int i){
+        return P1point > i;
+    }
+
+    private boolean P2pointIsGreaterWhat(int i){
+        return P2point > i;
+    }
+
+    private boolean P2pointIsLessWhat(int i){
+        return P2point < i;
+    }
+
+    private boolean P1pointIsLessWhat(int i) {
+        return P1point < i;
+    }
+
+    private boolean P1pointIsEqualsToP2point() {
+        return P1point == P2point;
+    }
+
+    private int subtraction(int One, int Two){
+        return One - Two;
+    }
+
+    private boolean numberIsGreaterWhat(int number, int i){
+        return number > i;
+    }
+
     public void SetP1Score(int number){
         
         for (int i = 0; i < number; i++)
